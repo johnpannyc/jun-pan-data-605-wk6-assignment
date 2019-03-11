@@ -1,0 +1,242 @@
+---
+title: "data 605 assignment 6"
+author: "Jun Pan"
+date: "March 8, 2019"
+output: html_document
+---
+```{r}
+library(graphics)
+```
+
+1. A box contains 54 red marbles, 9 white marbles, and 75 blue marbles.  If a marble is randomly selected from the box, what is the probability that it is red or blue?  Express your answer as a fraction or a decimal number rounded to four decimal places.
+
+
+There are a total of 138 marbles in three colors (red, white and blue).  so the probability of picking red or blue marble
+
+is the total number of (red+blue) / total marbles
+
+```{r}
+round((54+75)/(54+75+9), 4)
+```
+So the probablity of picking red or blue is 0.9348.
+
+
+
+
+2. You are going to play mini golf.  A ball machine that contains 19 green golf balls, 20 red golf balls, 24 blue golf balls, and 17 yellow golf balls, randomly gives you your ball.  What is the probability that you end up with a red golf ball?  Express your answer as a simplified fraction or a decimal rounded to four decimal places.
+
+The probability of having a red ball is: red/(green+ red+blue+yellow)
+
+```{r}
+20/(19+20+24+17)
+```
+
+
+
+
+
+3. A pizza delivery company classifies its customers by gender and location of residence.  The research department has gathered data from a random sample of 1399 customers.  The data is summarized in the table below. 
+  
+  What is the probability that a customer is not male or does not live with parents?  Write your answer as a fraction or a decimal number rounded to four decimal places.
+
+```{r}  
+df <- data.frame(male=c(81,116,215,130,129),
+                    female=c(228,79,252,97,72), 
+                    row.names = c("apartment","dorm","with parents","Fraternity House","other"))
+df
+```
+
+
+```{r}
+p_male_live_with_parents <- 215/(81+116+215+130+129+228+79+252+97+72)
+p_male_live_with_parents
+```
+```{r}
+p_not_male_or_not_with_parents <- round((1-p_male_live_with_parents), 4)
+p_not_male_or_not_with_parents
+```
+
+So the probability of a customer not male and does not live with parents is 0.8463
+  
+  
+  
+  
+4. Determine if the following events are independent. Going to the gym.  Losing weight.  
+ 
+Answer: A)Dependent B)Independent  
+
+
+The answer is A)Dependent
+
+
+
+
+5. A veggie wrap at City Subs is composed of 3 different vegetables and 3 different condiments wrapped up in a tortilla.  If there are 8 vegetables, 7 condiments, and 3 types of tortilla available, how many different veggie wraps can be made?
+
+```{r}
+choose(8, 3) * choose(7, 3) * 3
+```
+
+so there are 5880 different veggie wraps can be made.
+
+
+
+6. Determine if the following events are independent. Jeff runs out of gas on the way to work.  Liz watches the evening news.  
+
+
+Answer: A)Dependent B)Independent
+
+The answer is B)Independent
+
+
+
+
+7. The newly elected president needs to decide the remaining 8 spots available in the cabinet he/she is appointing.  If there are 14 eligible candidates for these positions (where rank matters), how many different ways can the members of the cabinet be appointed?
+
+Solution:
+
+14!/(14-8)! = 121,080,960
+
+
+
+
+
+
+
+
+8. A bag contains 9 red, 4 orange, and 9 green jellybeans.  What is the probability of reaching into the bag and randomly withdrawing 4 jellybeans such that the number of red ones is 0, the number of orange ones is 1, and the number of green ones is 3?  Write your answer as a fraction or a decimal number rounded to four decimal places.
+
+```{r}
+round((choose(4, 1) * choose(9, 3) / choose((9+4+9), 4)), digits = 4)
+```
+
+
+The probability of choosing 0 red, 1 orange and 3 green jelly beans is 0.0459.
+
+
+
+9. Evaluate the following expression. 11! / 7!
+
+
+Answer: 11!/7! = $11*10*9*...*1 / 7*6*5*...*1 = 11*10*9*8 = 7920$
+
+
+
+
+
+10. Describe the complement of the given event. 67% of subscribers to a fitness magazine are over the age of 34.  
+
+
+Answer: 33% of subscribers to a fitness magazine are 34 years older or younger.
+
+
+
+
+
+
+11. If you throw exactly three heads in four tosses of a coin you win $97.  If not, you pay me $30
+
+Step 1. Find the expected value of the proposition.  Round your answer to two decimal places.
+
+
+```{r}
+p_W <- 0.5^4 * choose(4, 3)
+
+#Step 1.
+EV <- p_W * 97 - (1-p_W) * 30
+EV
+```
+
+
+
+Step 2. If you played this game 559 times how much would you expect to win or lose? (Losses must be entered as negative.)
+
+
+```{r}
+559 * EV
+```
+
+Win 978.25 dollars
+
+
+
+
+
+12. Flip a coin 9 times.  If you get 4 tails or less, I will pay you $23.  Otherwise you pay me $26.12. 
+
+Step 1. Find the expected value of the proposition.  Round your answer to two decimal places.
+
+```{r}
+p_W_12 <- sum(dbinom(4:0, 9, 0.5))
+
+#Step 1.
+EV_12 <- p_W_12 * 23 - (1-p_W_12) * 26
+EV_12
+```
+
+
+
+
+Step 2. If you played this game 994 times how much would you expect to win or lose? (Losses must be entered as negative.)
+
+```{r}
+994 *EV_12 
+```
+Loss 1491 dollars
+
+
+
+
+
+13. The sensitivity and specificity of the polygraph has been a subject of study and debate for years.  A 2001 study of the use of polygraph for screening purposes suggested that the probability of detecting a liar was .59 (sensitivity) and that the probability of detecting a "truth teller" was .90 (specificity).   We estimate that about 20% of individuals selected for the screening polygraph will lie. 
+
+a.  What is the probability that an individual is actually a liar given that the polygraph detected him/her as such?  (Show me the table or the formulaic solution or both.)
+
+```{r}
+round(((0.2 * 0.59) / ((0.2 * 0.59) + (0.8 * 0.1))), digits = 4)
+```
+
+
+
+b.  What is the probability that an individual is actually a truth-teller given that the polygraph detected him/her as such?   (Show me the table or the formulaic solution or both.)
+
+```{r}
+round(((0.8 * 0.9) / ((0.8 * 0.9) + (0.2 * 0.41))), digits = 4)
+```
+
+
+c.  What is the probability that a randomly selected individual is either a liar or was identified as a liar by the polygraph?  Be sure to write the probability statement.
+
+
+```{r}
+round((0.2 + 0.8 * 0.1), digits = 4)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
